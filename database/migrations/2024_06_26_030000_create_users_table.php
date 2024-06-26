@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId('position_id')->constrained('positions')->onUpdate('cascade')->onDelete('cascade');
             $table->date('join_date');
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

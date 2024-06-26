@@ -13,7 +13,9 @@ class UnitController extends Controller
      */
     public function index()
     {
-        return view('data-unit.index');
+        return view('data-unit.index')->with([
+            'title' => 'Data Unit',
+        ]);
     }
 
     /**
@@ -41,7 +43,9 @@ class UnitController extends Controller
      */
     public function show(Unit $unit)
     {
-        //
+        return view('data-unit.detail-unit')->with([
+            'data' => $unit,
+        ]);
     }
 
     /**
@@ -49,7 +53,9 @@ class UnitController extends Controller
      */
     public function edit(Unit $unit)
     {
-        //
+        return view('data-unit.update-unit')->with([
+            'data' => $unit,
+        ]);
     }
 
     /**
@@ -57,7 +63,11 @@ class UnitController extends Controller
      */
     public function update(Request $request, Unit $unit)
     {
-        //
+        Unit::where('id', $unit->id)->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect('/data-unit');
     }
 
     /**
@@ -65,19 +75,23 @@ class UnitController extends Controller
      */
     public function destroy(Unit $unit)
     {
-        //
+        Unit::where('id', $unit->id)->update([
+            'is_active' => false,
+        ]);
     }
 
     public function table()
     {
-        $unit = Unit::query();
+        $unit = Unit::query()->where('is_active', true);
 
         return DataTables::of($unit)
-        ->addIndexColumn()
-        ->addColumn('action', function($data) {
-            return view('partials.button');
-        })
-        ->rawColumns(['action'])
-        ->make();
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                return view('partials.button')->with([
+                    'id' => $data->id,
+                ]);
+            })
+            ->rawColumns(['action'])
+            ->make();
     }
 }

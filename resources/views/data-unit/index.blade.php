@@ -82,38 +82,69 @@
             });
         }
 
-        // function table() {
-        //     $('#data-unit').DataTable({
-        //         ordering: true,
-        //         serverSide: true,
-        //         processing: true,
-        //         ajax: {
-        //             'url' : "{{ url('data-unit/tabel') }}"
-        //         },
-        //         colums: [
-        //             {
-        //                 data: 'DT_RowIndex',
-        //                 name: 'DT_RowIndex',
-        //                 width: '13px',
-        //                 orderable: false,
-        //                 searchable: false,
-        //             },
-        //         ],
-        //         responsive: true,
-        //         autoWidth: true,
-        //         // columDefs: [
-        //         //     {
-        //         //         className: 'dt'
-        //         //     }
-        //         // ],
-        //     });
-        // }
-
         function create() {
             $.get("{{ url('data-unit/create') }}", {}, function(data, status) {
                 $('#modal-page').html(data);
                 $('#modal-title').html('Tambah Data Unit');
                 $('#ModalData').modal('show');
+            });
+        }
+
+        function detail(id) {
+            $.get("{{ url('data-unit') }}/" + id, {}, function(data, status) {
+                $('#modal-page').html(data);
+                $('#modal-title').html('Detail Data Unit');
+                $('#ModalData').modal('show');
+            })
+        }
+
+        function edit(id) {
+            $.get("{{ url('data-unit') }}/" + id + "/edit", {}, function(data, status) {
+                $('#modal-page').html(data);
+                $('#modal-title').html('Edit Data Unit');
+                $('#ModalData').modal('show');
+            })
+        }
+
+        function remove(id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: "Anda Yakin?",
+                text: "Anda akan mengubah data user ini",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "get",
+                        url: "{{ url('data-unit') }}/" + id + "/delete",
+                        success: function(data) {
+                            swalWithBootstrapButtons.fire({
+                                title: "Berhasil!",
+                                text: "Data berhasil dihapus",
+                                icon: "success"
+                            });
+                            $('#data-unit').DataTable().ajax.reload();
+                        }
+                    })
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Gagal",
+                        text: "Data gagal dihapus",
+                        icon: "error"
+                    });
+                }
             });
         }
     </script>
