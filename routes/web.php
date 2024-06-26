@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UnitController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
+Route::get('/data-unit', [UnitController::class, 'index']);
+Route::get('/data-unit/create', [UnitController::class, 'create']);
+Route::post('/data-unit', [UnitController::class, 'store'])->name('storeUnit');
+Route::get('/data-unit/tabel', [UnitController::class, 'table']);
+// Route::get('/data-unit', function () {
+//     return view('data-unit.index');
+// });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
