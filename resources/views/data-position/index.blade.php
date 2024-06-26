@@ -20,11 +20,11 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table id="data-unit" class="table table-bordered table-hover text-center">
+                        <table id="data-position" class="table table-bordered table-hover text-center">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Unit</th>
+                                    <th>Nama Jabatan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -47,12 +47,12 @@
         });
 
         function table() {
-            $('#data-unit').DataTable({
+            $('#data-position').DataTable({
                 ordering: true,
                 serverSide: true,
                 processing: true,
                 ajax: {
-                    'url': "{{ url('data-unit/tabel') }}"
+                    'url': "{{ url('data-jabatan/tabel') }}"
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -83,25 +83,25 @@
         }
 
         function create() {
-            $.get("{{ url('data-unit/create') }}", {}, function(data, status) {
+            $.get("{{ url('data-jabatan/create') }}", {}, function(data, status) {
                 $('#modal-page').html(data);
-                $('#modal-title').html('Tambah Data Unit');
+                $('#modal-title').html('Tambah Data Jabatan');
                 $('#ModalData').modal('show');
             });
         }
 
         function detail(id) {
-            $.get("{{ url('data-unit') }}/" + id, {}, function(data, status) {
+            $.get("{{ url('data-jabatan') }}/" + id, {}, function(data, status) {
                 $('#modal-page').html(data);
-                $('#modal-title').html('Detail Data Unit');
+                $('#modal-title').html('Detail Data Jabatan');
                 $('#ModalData').modal('show');
             })
         }
 
         function edit(id) {
-            $.get("{{ url('data-unit') }}/" + id + "/edit", {}, function(data, status) {
+            $.get("{{ url('data-jabatan') }}/" + id + "/edit", {}, function(data, status) {
                 $('#modal-page').html(data);
-                $('#modal-title').html('Edit Data Unit');
+                $('#modal-title').html('Edit Data Jabatan');
                 $('#ModalData').modal('show');
             })
         }
@@ -126,14 +126,14 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: "get",
-                        url: "{{ url('data-unit') }}/" + id + "/delete",
+                        url: "{{ url('data-jabatan') }}/" + id + "/delete",
                         success: function(data) {
                             swalWithBootstrapButtons.fire({
                                 title: "Berhasil!",
                                 text: "Data berhasil dihapus",
                                 icon: "success"
                             });
-                            $('#data-unit').DataTable().ajax.reload();
+                            $('#data-position').DataTable().ajax.reload();
                         }
                     })
                 } else if (

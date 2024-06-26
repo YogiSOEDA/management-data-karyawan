@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,15 @@ Route::get('/data-unit/{unit}', [UnitController::class, 'show']);
 Route::get('/data-unit/{unit}/edit', [UnitController::class, 'edit']);
 Route::post('/data-unit/{unit}/update', [UnitController::class, 'update']);
 Route::get('/data-unit/{unit}/delete', [UnitController::class, 'destroy']);
+
+Route::get('/data-jabatan', [PositionController::class, 'index']);
+Route::get('/data-jabatan/create', [PositionController::class, 'create']);
+Route::post('/data-jabatan', [PositionController::class, 'store'])->name('storePosition');
+Route::get('/data-jabatan/tabel', [PositionController::class, 'table']);
+Route::get('/data-jabatan/{position}', [PositionController::class, 'show']);
+Route::get('/data-jabatan/{position}/edit', [PositionController::class, 'edit']);
+Route::post('/data-jabatan/{position}/update', [PositionController::class, 'update']);
+Route::get('/data-jabatan/{position}/delete', [PositionController::class, 'destroy']);
 
 Auth::routes();
 

@@ -328,7 +328,7 @@ return [
                 ],
                 [
                     'text' => 'Data Jabatan',
-                    'url' => '#',
+                    'url' => 'data-jabatan',
                 ],
             ],
         ],
