@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'RSIA Puri Bunda',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -315,8 +315,9 @@ return [
         ],
         [
             'text' => 'Data Karyawan',
-            'url' => '#',
+            'url' => 'data-karyawan',
             'icon' => 'fas fa-fw fa-user',
+            'active' => ['data-karyawan*'],
         ],
         [
             'text' => 'Master Data',

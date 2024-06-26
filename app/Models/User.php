@@ -19,8 +19,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'username',
         'password',
+        'unit_id',
+        'join_date',
+        'is_active',
+        'remember_token',
     ];
 
     /**
@@ -39,7 +43,17 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        // 'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
+    public function employeePosition()
+    {
+        return $this->hasMany(EmployeePosition::class);
+    }
 }

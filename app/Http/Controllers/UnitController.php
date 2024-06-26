@@ -94,4 +94,12 @@ class UnitController extends Controller
             ->rawColumns(['action'])
             ->make();
     }
+
+    public function listUnit()
+    {
+        $data = Unit::all()->where('is_active', true);
+        return view('partials.dropdown.unit')->with([
+            'data' => $data,
+        ]);
+    }
 }

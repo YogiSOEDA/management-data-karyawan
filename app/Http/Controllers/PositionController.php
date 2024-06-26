@@ -94,4 +94,12 @@ class PositionController extends Controller
             ->rawColumns(['action'])
             ->make();
     }
+
+    public function listPosition()
+    {
+        $data = Position::all()->where('is_active', true);
+        return view('partials.dropdown.position')->with([
+            'data' => $data,
+        ]);
+    }
 }

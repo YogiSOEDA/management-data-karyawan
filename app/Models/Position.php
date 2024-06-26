@@ -10,4 +10,9 @@ class Position extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function employeePosition()
+    {
+        return $this->hasOne(EmployeePosition::class);
+    }
 }

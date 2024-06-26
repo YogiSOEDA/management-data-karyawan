@@ -2,7 +2,7 @@
     {{ csrf_field() }}
 
     <div class="form-group">
-        <label for="">Nama Unit</label>
+        <label for="name">Nama Unit</label>
         <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Nama Unit" value="{{ $data->name }}" required>
     </div>
     <div class="form-group">
