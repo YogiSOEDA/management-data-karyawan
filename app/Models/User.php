@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(EmployeePosition::class);
     }
+
+    public function loginLog()
+    {
+        return $this->hasMany(LoginLog::class);
+    }
 }

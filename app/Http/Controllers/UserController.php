@@ -102,7 +102,7 @@ class UserController extends Controller
             } elseif ($key == 1) {
                 $position2 = $position . ', ' . $data->employeePosition[$key]->position->name;
             } else {
-                $position2 = ', ' . $position2 . ', ' . $data->employeePosition[$key]->position->name;
+                $position2 = $position2 . ', ' . $data->employeePosition[$key]->position->name;
             }
         }
 
@@ -170,7 +170,7 @@ class UserController extends Controller
                         } elseif ($key == 1) {
                             $name2 = $name . ', ' . $position[$key]->position->name;
                         } else {
-                            $name2 = ', ' . $name2 . ', ' . $position[$key]->position->name;
+                            $name2 = $name2 . ', ' . $position[$key]->position->name;
                         }
                     }
                 } else {

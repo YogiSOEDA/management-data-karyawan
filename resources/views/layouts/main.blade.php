@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('title')
-    @if (request()->path() == 'dashboard')
+    @if (request()->path() == 'dashboard' || request()->path() == "/")
         RSIA Puri Bunda
     @else
         RSIA Puri Bunda | {{ $title }}

@@ -310,7 +310,7 @@ return [
         // Sidebar items:
         [
             'text' => 'Dashboard',
-            'url' => 'dashboard',
+            'url' => '/',
             'icon' => 'fas fa-tachometer-alt',
         ],
         [
