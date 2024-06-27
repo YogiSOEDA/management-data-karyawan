@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
         $units = Unit::pluck('id');
         $positions = Position::pluck('id');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $user = User::create([
                 'name' => 'User ' . $i,
                 'username' => 'user' . $i,
