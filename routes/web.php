@@ -51,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/data-karyawan/tabel', [UserController::class, 'table']);
     Route::get('/data-karyawan/{user}', [UserController::class, 'show']);
     Route::get('/data-karyawan/{user}/edit', [UserController::class, 'edit']);
+    Route::post('/data-karyawan/{user}/update', [UserController::class, 'update']);
+    Route::get('/data-karyawan/{user}/delete', [UserController::class, 'destroy']);
 
 });
 

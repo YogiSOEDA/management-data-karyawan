@@ -108,5 +108,47 @@
         function edit(id) {
             window.location.href = "{{ url('data-karyawan') }}/" + id + "/edit";
         }
+
+        function remove(id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: "Anda Yakin?",
+                text: "Anda akan menghapus data ini",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "get",
+                        url: "{{ url('data-karyawan') }}/" + id + "/delete",
+                        success: function(data) {
+                            swalWithBootstrapButtons.fire({
+                                title: "Berhasil!",
+                                text: "Data berhasil dihapus",
+                                icon: "success"
+                            });
+                            $('#data-employee').DataTable().ajax.reload();
+                        }
+                    })
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire({
+                        title: "Gagal",
+                        text: "Data gagal dihapus",
+                        icon: "error"
+                    });
+                }
+            });
+        }
     </script>
 @endpush

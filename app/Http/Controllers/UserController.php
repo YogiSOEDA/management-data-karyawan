@@ -118,25 +118,81 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $data = User::where('id', $user->id)
+            ->with([
+                'unit',
+                'employeePosition' => function ($query) {
+                    $query->with(['position']);
+                },
+            ])
+            ->first();
+
         return view('data-employee.update-employee')->with([
             'title' => 'Data Karyawan',
+            'data' => $data,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $unit = Unit::where('id', $request->unit)->count();
+
+        if ($unit == 0) {
+            $unit_id = Unit::insertGetId([
+                'name' => $request->unit,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        } else {
+            $unit_id = $request->unit;
+        }
+
+        User::where('id', $user->id)->update([
+            'name' => $request->name,
+            'password' => Hash::make($request->password),
+            'unit_id' => $unit_id,
+            'join_date' => $request->join_date,
+        ]);
+
+        foreach ($request->position as $key => $value) {
+            $position = Position::where('id', $request->position[$key])->count();
+
+            if ($position == 0) {
+                $position_id = Position::insertGetId([
+                    'name' => $request->position[$key],
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+            } else {
+                $position_id = $request->position[$key];
+            }
+
+            if (
+                EmployeePosition::where('user_id', $user->id)
+                    ->where('position_id', $position_id)
+                    ->count() == 0
+            ) {
+                EmployeePosition::create([
+                    'user_id' => $user->id,
+                    'position_id' => $position_id,
+                ]);
+            }
+        }
+        
+        return redirect('/data-karyawan');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        User::where('id', $user->id)->update([
+            'is_active' => false,
+        ]);
     }
 
     public function table()
